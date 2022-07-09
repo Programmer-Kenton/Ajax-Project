@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发送Ajax请求 显示学生列表</title>
+</head>
+<body>
+<script type="text/javascript">
+    window.onload = function (){
+        document.getElementById("btn").onclick = function (){
+            // 1.创建核心对象
+            var xhr = new XMLHttpRequest();
+            // 2.注册回调函数
+            xhr.onreadystatechange = function (){
+                if (xhr.readyState = 4) {
+                    if (xhr.status == 200) {
+                        // document.getElementById("stubody").innerHTML = this.responseText
+                        // 将json格式的字符串转换成json对象
+                        // 是一个数组 并且数组中有多个学生数据
+                        var stuList = JSON.parse(this.responseText);
+                        for (var i = 0;i < stuList.length;i++){
+                            var stu = stuList[i];
+                            html += "<tr>",
+                            html += "<td>+(i+1)+</td"
+                            html += "<td>"+stu.name"</td>"
+                            html += "<td>"+stu.age+"</td>"
+                            html += "<td>"+stu.addr+"</td>"
+                            html += "</tr>"
+                        }
+                        document.getElementById("stubody").innerHTML = html;
+                    }else {
+                        alert(this.status);
+                    }
+                }
+            }
+            // 3.开启通道
+            xhr.open("GET","ajax-request4?t="+new Date().getTime(),true);
+            // 4.发送请求
+            xhr.send();
+        }
+    }
+</script>
+<input type="button" value="显示学生列表" id="btn">
+<table width="50%" border="1px">
+    <tbody id="stubody">
+   <!-- <tr>
+        <td>1</td>
+        <td>张三</td>
+        <td>20</td>
+        <td>北京大兴区</td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <th>李四</th>
+        <th>22</th>
+        <th>北京海淀区</th>
+    </tr>-->
+    </tbody>
+
+</table>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试:ajax跨域访问会不会有问题?</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    /**
+     * 默认情况下 发送AJax请求会出现一下错误
+     * Access to XHMHttpRequest at 'http://localhost:8081/AjaxB/hello' has been blocked by CORS policy:
+     * No 'Access-Control-Allow-Origin' header is present on the requested resource
+     * 出现这个错误的根本原因是:跨域的时候 不允许共享同一个XMLHttpRequest对象 因为共享同一个XMLHttPRequest对象是不安全的
+     * 重点提升:CORS策略阻止 Ajax请求被同源策略阻止
+     * 什么是同源策略
+     * 同源策略是一种安全策略
+     * 什么是同源? 什么是不同源?
+           协议一致、域名一致、端口一致 才是同源
+           只要上面任一元素不相同就是不同源
+     同源:XMLHttpRequest对象可以共享 不同源XMHHttpRequest对象不可以共享
+     */
+    window.onload = function (){
+        document.getElementById("btn").onclick = function (){
+            // 发生Ajax跨域请求
+            // 1.创建核心对象
+            let xhr = new XMLHttpRequest();
+            // 2.注册回调函数
+            xhr.onreadystatechange = function (){
+                if (xhr.readyState == 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        document.getElementById("mydiv").innerHTML = xhr.responseText;
+                    }else {
+                        alert(this.status);
+                    }
+                }
+                // 3.开启通道
+                xhr.open("GET", "http://localhost:8081/AjaxB/hello", true);
+                // 4.发送请求
+                xhr.send();
+            }
+        }
+
+    }
+</script>
+<button id="btn">发生AJax跨域请求</button>
+<div id="mydiv"></div>
+</body>
+</html>

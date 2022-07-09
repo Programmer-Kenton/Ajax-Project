@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>json test</title>
+</head>
+<body>
+<script type="text/javascript">
+    /** 在Javascript中如何创建对象
+     * var jsonobj = {
+     *     "属性名1":属性值,
+     *     "属性名2":属性值,
+     *     "属性名3":属性值,
+     *     "属性名4":属性值,
+     * }
+     * 注意:
+     *     属性值的数据类型 可能是数字、布尔类型、字符串、数组
+     */
+    var user = {
+        "usercode":111,
+        "username":"zhangsan",
+        "sex":true,
+        "age":20,
+        "hobby":["吃饭","睡觉","打豆豆"],
+        "addr":address
+    }
+
+    var address = {
+        "city":"北京",
+        "street":"北京大兴区",
+        "number":"123456"
+    }
+    // 访问json对象的属性
+    // 方式一
+    console.log(user.usercode);
+    console.log(user.username);
+    console.log(user.sex ? "男":"女");
+    console.log(user.age);
+
+    for (var i = 0;i < user.hobby.length;i++){
+        console.log(user.hobby[i]);
+    }
+
+    console.log(user.addr.street);
+
+    // 方式二
+    console.log(user["usercode"]);
+    console.log(user["username"]);
+    console.log(user["sex"]? "男":"女");
+    console.log(user["age"]);
+</script>
+</body>
+</html>

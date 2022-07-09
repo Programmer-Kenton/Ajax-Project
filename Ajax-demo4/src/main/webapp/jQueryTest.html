@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试自己编写的JS库</title>
+</head>
+<body>
+<!--使用jQuery库的第一件事 就是把jQuery库引进来-->
+<script type="text/javascript" src="js/jQuery-1.0.0.js"></script>
+<script type="text/javascript">
+    $("#btn").click(function (){
+        $("btn").click(function (){
+            // alert("hello");
+            // 获取文本框内容
+            alert($("#username").val());
+            // 修改文本框的value
+            $("usercode").val("张三")
+            // 设置div内容
+            $("#mydiv").html("我们自己封装的jQuery不是也挺好的吗？呵呵")
+        })
+    })
+</script>
+<button id="btn">hello</button>
+用户代码:<input type="text" id="usercode"></br>
+<div id="mydiv"></div>
+</body>
+</html>

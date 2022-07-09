@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>A应用的index界面</title>
+</head>
+<body>
+<!--通过超链接的方式实现跨域-->
+<a href="http://localhost:8081/AjaxB/index.html">b的index页面(跨域访问)</a>
+<!--form表单发生请求可以跨域吗?-->
+<form action="http://localhost:8081/AjaxB/user/reg" method="post">
+    用户名:<input type="text" name="username"></br>
+    密码:<input type="password" name="password"></br>
+    <input type="submit" value="注册">
+</form>
+
+</br>
+<!--通过JS代码中的windows.location.href/document.location.href可以跨域吗?-->
+<button onclick="window.location.href='http://localhost:8081/AjaxB/index.html'">B的index页面(跨域访问)1</button></br>
+<button onclick="document.location.href='http://localhost:8081/AjaxB/index.html'">B的index页面(跨域访问)2</button></br>
+
+<!--使用Script标签可以加载js文件 可以跨域吗-->
+<script type="text/javascript" src="http://localhost:8081/AjaxB/my.js"></script>
+
+<!--加载其他站点的图片 可以跨域吗-->
+<img src="http://localhost:8081/AjaxB/static/ayi.jpg" />
+</body>
+</html>

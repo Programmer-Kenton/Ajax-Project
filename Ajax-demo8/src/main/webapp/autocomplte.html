@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax实现搜索联想自动补全功能</title>
+    <style>
+        .userInput{
+            widh: 300px;
+            height :25px;
+            font-size: 20px;
+            padding-left: 5px;
+        }
+        .showDatadiv {
+            width: 300px;
+            border: 1px solid lightgray;
+            background-color: antiquewhite;
+            display: none;
+        }
+        .showDatadiv p {
+            padding-left: 5px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+        .showDatadiv p:hover{
+            cursor: pointer;
+            border: 1px blue solid;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+    // 不使用Jquery也不使用自己写的ajax库
+    window.onload = function (){
+        document.getElementById("keywords").onkeyup = function (){
+            // 发送Ajax请求
+            // 1.创建Ajax核心对象
+            const xhr = new XMLHttpRequest();
+            // 2.注册回调函数
+            xhr.onreadystatechange = function (){
+                if (this.value == "") {
+                    document.getElementById("datadiv").style.display = "none";
+                }else {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            const json = JSON.parse(xhr.responseText);
+                            // 遍历数组
+                            let html = "";
+                            for (let i = 0;i < json.length;i++){
+                                html += "<p onclick='setInput(\""+json[i].content+"\")'>"+json[i].content+"</p>"
+                            }
+                            document.getElementById("datadiv").innerHTML = html;
+                            // 显示出来
+                            document.getElementById("datadiv").style.display = "block"
+                        }else {
+                            console.log(xhr.status);
+                        }
+                    }
+                }
+                // 3.开启通道
+                xhr.open("GET","http://localhost:8080/ajax-autocomplete/query?_="+new Date().getTime()+"keywords="+this.value,true);
+                // 4.发送请求
+                xhr.send()
+            }
+        }
+    }
+
+    function setInput(content){
+        document.getElementById("keywords").value = content;
+        document.getElementById("datadiv").style.display = "none";
+    }
+</script>
+<input type="text" class="userInput">
+<div itemid="datadiv" class="showDataDiv" id="keywords">
+    <p>上海疫情最新情况</p>
+    <p>上海天气</p>
+    <p>上海时间</p>
+    <p>上海人</p>
+</div>
+</body>
+</html>

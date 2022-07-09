@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Jquery的jsonp封装解决Ajax跨域问题</title>
+</head>
+<body>
+<!--引入Jquery库-->
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+
+<script type="text/javascript">
+
+    function sayHello(data){
+        $("#mydiv").html("欢迎你:"+data.username);
+    }
+    $(function (){
+        $("#btn").click(function (){
+            // 发送所谓的Ajax请求 本质上不是Ajax请求  AJax请求必须要有XMLHttpRequest对象
+            $.ajax({
+                // jsonp请求支持get请求
+                type : "GET",
+                // 实际发送的请求是/AjaxB/jsonp3?callback: jQuery35106693295361152447_1657177858332
+                // callback: jQuery35106693295361152447_1657177858332
+                // callback就是我们的fun 后面一长串就是我们之前的sayHello 而这个名字是jquery自动为我们生成的
+                url : "http://localhost:8081/AjaxB/jsonp3",
+                // 指定数据类型是jsonp形式
+                dataType : "jsonp",
+                jsonp : "fun",
+                /*jsonpCallback : function (data){
+                    $("#mydiv").html("欢迎你:" + data.username);
+                }*/
+                jsonpCallback : "sayHello"
+                /*success : function (data){
+                    // data用来接收服务器端的响应
+                    $("#mydiv").html(data.username)
+                }*/
+            })
+        })
+    })
+</script>
+<button id="btn">Jquery库封装的jsonp</button>
+<div id="mydiv"></div>
+</body>
+</html>

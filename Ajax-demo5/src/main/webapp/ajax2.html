@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp实现跨域</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    /**
+     * 自定义的函数
+     */
+    function sayHello(data){
+        // alert("Hello World!!!");
+        alert("hello,"+data.name)
+    }
+</script>
+<!--script标签是可以跨域的 src属性可以是xxx.js文件 这个路径也可以是个servlet路径-->
+<script type="text/javascript" src="http://localhost:8081/AjaxB/jsonp1?fun=sayHello">
+
+</script>
+</body>
+</html>
